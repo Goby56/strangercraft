@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "strangercraft",
+  "version": "${version}",
+
+  "name": "Strangercraft",
+  "description": "The upside down dimension from Stranger Things added into Minecraft",
+  "authors": [
+    "Goby56"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/Goby56/strangercraft"
+  },
+
+  "license": "GNU General Public License v3.0",
+  "icon": "assets/strangercraft/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.goby56.strangercraft.Strangercraft"
+    ]
+  },
+  "mixins": [
+    "strangercraft.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
