@@ -19,13 +19,11 @@ public class UpsideDownDimension {
 
     public static void register() {
         Strangercraft.LOGGER.debug("Registering dimensions for " + Strangercraft.MOD_ID);
-        System.out.println("REGISTERING UPSIDE DOWN");
         CustomPortalBuilder.beginPortal()
-                .frameBlock(Blocks.NETHER_WART_BLOCK)
+                .frameBlock(Blocks.MANGROVE_ROOTS)
                 .destDimID(UPSIDE_DOWN_DIMENSION_KEY.getValue())
-                .tintColor(200, 19, 52)
-                .lightWithItem(Items.FLINT_AND_STEEL)
-                .onlyLightInOverworld()
+                .tintColor(255, 34, 0)
+                .lightWithItem(Items.PHANTOM_MEMBRANE)
                 .registerPortal();
     }
 }
