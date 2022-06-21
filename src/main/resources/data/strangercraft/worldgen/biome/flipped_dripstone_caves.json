@@ -1,0 +1,112 @@
+{
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "downfall": 0.1,
+  "effects": {
+    "fog_color": 3753558,
+    "foliage_color": 9211020,
+    "grass_color": 5334884,
+    "sky_color": 2699320,
+    "water_color": 4276043,
+    "water_fog_color": 4600653,
+    "grass_color_modifer": "none",
+    "particle": {
+      "probability": 0.15,
+      "options": {
+        "type": "minecraft:white_ash"
+      }
+    },
+    "ambient_sound": "minecraft:ambient.warped_forest.loop",
+    "mood_sound": {
+      "sound": "minecraft:ambient.soul_sand_valley.mood",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2
+    },
+    "music": {
+      "sound": "minecraft:music.nether.soul_sand_valley",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
+  },
+  "features": [
+    [],
+    [],
+    [
+      "minecraft:amethyst_geode",
+      "minecraft:large_dripstone"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:dripstone_cluster",
+      "minecraft:pointed_dripstone"
+    ],
+    [],
+    [
+      "minecraft:glow_lichen",
+      "minecraft:trees_plains",
+      "minecraft:patch_grass_plain",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:patch_pumpkin"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "precipitation": "none",
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [
+      {
+        "type": "minecraft:bat",
+        "weight": 70,
+        "minCount": 4,
+        "maxCount": 10
+      }
+    ],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:zombie_horse",
+        "weight": 30,
+        "minCount": 2,
+        "maxCount": 4
+      }
+    ],
+    "misc": [
+      {
+        "type": "minecraft:warden",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "monster": [
+      {
+        "type": "minecraft:vex",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 2
+      },
+      {
+        "type": "minecraft:cat",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.3
+}

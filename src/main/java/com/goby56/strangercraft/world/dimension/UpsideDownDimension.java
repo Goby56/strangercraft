@@ -19,6 +19,8 @@ public class UpsideDownDimension {
 
     public static void register() {
         Strangercraft.LOGGER.debug("Registering dimensions for " + Strangercraft.MOD_ID);
+        System.out.println(UPSIDE_DOWN_DIMENSION_KEY.getValue().toString());
+        System.out.println(UPSIDE_DOWN_TYPE_KEY.getValue().toString());
         CustomPortalBuilder.beginPortal()
                 .frameBlock(Blocks.MANGROVE_ROOTS)
                 .destDimID(UPSIDE_DOWN_DIMENSION_KEY.getValue())
