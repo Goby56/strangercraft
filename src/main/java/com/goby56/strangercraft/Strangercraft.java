@@ -1,6 +1,8 @@
 package com.goby56.strangercraft;
 
-import com.goby56.strangercraft.world.biome.UpsideDownBiomes;
+import com.goby56.strangercraft.block.ModBlocks;
+import com.goby56.strangercraft.item.ModItems;
+import com.goby56.strangercraft.world.biome.ModBiomeKeys;
 import com.goby56.strangercraft.world.dimension.UpsideDownDimension;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -21,8 +23,12 @@ public class Strangercraft implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
+		ModItems.register();
+
+		ModBlocks.register();
+
 		UpsideDownDimension.register();
 
-		UpsideDownBiomes.register();
+		ModBiomeKeys.register();
 	}
 }

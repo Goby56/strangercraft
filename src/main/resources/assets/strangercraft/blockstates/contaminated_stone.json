@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "": [
+      {
+        "model":  "strangercraft:block/contaminated_stone",
+        "weight": 100
+      },
+      {
+        "model":  "strangercraft:block/contaminated_stone",
+        "weight": 50,
+        "x": 90,
+        "y": 180,
+        "z": 270
+      }
+    ]
+  }
+}
