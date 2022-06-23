@@ -4,6 +4,8 @@ import com.goby56.strangercraft.Strangercraft;
 import net.fabricmc.fabric.impl.tag.convention.TagRegistration;
 import net.minecraft.block.Block;
 import net.minecraft.tag.TagKey;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class ModTags {
     public static class Blocks {
@@ -11,7 +13,7 @@ public class ModTags {
         public static final TagKey<Block> CORAL = registerTag("coral");
 
         private static TagKey<Block> registerTag(String name) {
-            return TagRegistration.BLOCK_TAG_REGISTRATION.registerFabric(name);
+            return TagKey.of(Registry.BLOCK_KEY, new Identifier(Strangercraft.MOD_ID, name));
         }
 
         public static void register() {

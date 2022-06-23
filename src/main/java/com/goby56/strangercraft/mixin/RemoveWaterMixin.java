@@ -32,6 +32,7 @@ public class RemoveWaterMixin {
     private void overrideFreezingFeatureStep(FeatureContext<DefaultFeatureConfig> context, CallbackInfoReturnable<Boolean> cir) {
         StructureWorldAccess world = context.getWorld();
         if (world.toServerWorld().getRegistryKey() == UPSIDE_DOWN_DIMENSION_KEY) {
+            Random random = Random.create("upside down worldgen".hashCode());
             BlockPos blockPosOrigin = context.getOrigin();
             BlockPos.Mutable surfaceBlockPos = new BlockPos.Mutable();
             BlockPos.Mutable blockPos = new BlockPos.Mutable();
@@ -48,11 +49,15 @@ public class RemoveWaterMixin {
                         if (blockState.isOf(Blocks.WATER)) {
                             world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
                         } else if (blockState.getFluidState().isOf(Fluids.WATER)) {
-                            world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
-//                            if (blockState.isIn(CORAL)) {
-//                                System.out.println("CORAL FOUND");
-//                                blockState.scheduledTick(world.toServerWorld(), blockPos, Random.create("upside down worldgen".hashCode()));
-//                            }
+//                            world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
+                            if (blockState.isIn(CORAL)) {
+                                blockState.scheduledTick(world.toServerWorld(), blockPos, random);
+                                /**
+                                 * Instead of making the coral dead using its tick method just add a
+                                 * method to the coral block class that kills it and then call it
+                                 * https://www.reddit.com/r/fabricmc/comments/mzg99m/can_i_use_mixins_to_add_a_new_method_to_an/
+                                 */
+                            }
                         }
                     }
                 }
