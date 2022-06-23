@@ -5,7 +5,11 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ModifyTreeGeneration",
-    "ExtendBuiltinBiomes"
+    "RemoveWaterMixin",
+    "coral.CoralBlockMixin",
+    "coral.CoralBlockBlockMixin",
+    "coral.CoralFanBlockMixin",
+    "coral.CoralWallFanBlockMixin"
   ],
   "client": [
   ],

@@ -2,6 +2,7 @@ package com.goby56.strangercraft;
 
 import com.goby56.strangercraft.block.ModBlocks;
 import com.goby56.strangercraft.item.ModItems;
+import com.goby56.strangercraft.tag.ModTags;
 import com.goby56.strangercraft.world.biome.ModBiomeKeys;
 import com.goby56.strangercraft.world.dimension.UpsideDownDimension;
 import net.fabricmc.api.ModInitializer;
@@ -26,6 +27,8 @@ public class Strangercraft implements ModInitializer {
 		ModItems.register();
 
 		ModBlocks.register();
+
+		ModTags.Blocks.register();
 
 		UpsideDownDimension.register();
 

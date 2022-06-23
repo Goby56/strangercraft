@@ -1,6 +1,6 @@
 {
   "carvers": {},
-  "downfall": 0.1,
+  "downfall": 0.5,
   "effects": {
     "fog_color": 3753558,
     "foliage_color": 9211020,
@@ -64,24 +64,17 @@
         "maxCount": 4
       }
     ],
-    "misc": [
-      {
-        "type": "minecraft:warden",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      }
-    ],
+    "misc": [],
     "monster": [
       {
         "type": "minecraft:vex",
-        "weight": 50,
+        "weight": 95,
         "minCount": 1,
         "maxCount": 2
       },
       {
-        "type": "minecraft:cat",
-        "weight": 1,
+        "type": "minecraft:warden",
+        "weight": 5,
         "minCount": 1,
         "maxCount": 1
       }
@@ -90,5 +83,5 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 0.3
+  "temperature": 0.5
 }
