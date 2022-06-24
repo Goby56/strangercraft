@@ -28,7 +28,7 @@ public class Strangercraft implements ModInitializer {
 
 		ModBlocks.register();
 
-		ModTags.Blocks.register();
+		ModTags.ModBlocks.register();
 
 		UpsideDownDimension.register();
 

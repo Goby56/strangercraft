@@ -1,16 +1,12 @@
 package com.goby56.strangercraft.mixin;
 
 import com.goby56.strangercraft.tag.ModTags;
-import com.goby56.strangercraft.world.dimension.UpsideDownDimension;
-import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
+import com.goby56.strangercraft.utils.ICoralExtension;
 import net.minecraft.block.*;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -21,8 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.goby56.strangercraft.tag.ModTags.Blocks.CORAL;
-import static com.goby56.strangercraft.tag.ModTags.Blocks.NATURALLY_WATERLOGGED_BLOCKS;
 import static com.goby56.strangercraft.world.dimension.UpsideDownDimension.UPSIDE_DOWN_DIMENSION_KEY;
 
 @Mixin(FreezeTopLayerFeature.class)
@@ -43,30 +37,39 @@ public class RemoveWaterMixin {
                     int y = world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z);
                     surfaceBlockPos.set(x, y, z);
                     blockPos.set(surfaceBlockPos);
-                    for (int k = y; k>-63; --k) {
+                    for (int k = y; k > -63; --k) {
                         blockPos.set(blockPos).move(Direction.DOWN, 1);
                         BlockState blockState = world.getBlockState(blockPos);
-                        if (blockState.isOf(Blocks.WATER)) {
+                        if (blockState.isOf(Blocks.WATER) || blockState.isIn(ModTags.ModBlocks.OCEAN_PLANTS)) {
+                            // Remove all water
                             world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
-                        } else if (blockState.getFluidState().isOf(Fluids.WATER)) {
-//                            world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
-                            if (blockState.isIn(CORAL)) {
-                                blockState.scheduledTick(world.toServerWorld(), blockPos, random);
-                                /**
-                                 * Instead of making the coral dead using its tick method just add a
-                                 * method to the coral block class that kills it and then call it
-                                 * https://www.reddit.com/r/fabricmc/comments/mzg99m/can_i_use_mixins_to_add_a_new_method_to_an/
-                                 */
+                        } else if (blockState.isIn(ModTags.ModBlocks.CORAL)) {
+                            // Turn coral into its dead variant
+//                            ICoralExtension deadCoralInterface = (ICoralExtension) blockState.getBlock();
+//                            deadCoralInterface.killCoral(blockState, world.toServerWorld(), blockPos);
+                            try {
+                                ICoralExtension deadCoralInterface = (ICoralExtension) blockState.getBlock();
+                                deadCoralInterface.killCoral(blockState, world.toServerWorld(), blockPos);
+                            } catch (Throwable t) {
+                                t.printStackTrace();
                             }
+                        } else if (blockState.isIn(ModTags.ModBlocks.OCEAN_PLANTS)) {
+//                            // Block is of kelp, seagrass, tall seagrass or sea pickle
+//                            if (world.getBlockState(blockPos.down(1)).isIn(ModTags.ModBlocks.OCEAN_FLOOR)) {
+//                                if (blockState.isOf(Blocks.KELP)) {
+//                                    // Place down fallen kelp plant (should also get height of the plant)
+//                                } else if (blockState.isOf(Blocks.SEAGRASS) || blockState.isOf(Blocks.TALL_SEAGRASS)) {
+//                                    // Replace with dead sea grass
+//                                }
+//                            }
+                        } else if (blockState.getFluidState().isOf(Fluids.WATER)) {
+                            world.setBlockState(blockPos, blockState.getBlock().getDefaultState(), Block.NOTIFY_LISTENERS);
                         }
                     }
                 }
             }
+
             cir.setReturnValue(true);
         }
-    }
-
-    private static Block getNonWaterloggedBlock(BlockState blockState) {
-        return blockState.getBlock();
     }
 }
