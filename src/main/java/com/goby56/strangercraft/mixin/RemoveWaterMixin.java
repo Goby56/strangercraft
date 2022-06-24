@@ -1,7 +1,7 @@
 package com.goby56.strangercraft.mixin;
 
 import com.goby56.strangercraft.tag.ModTags;
-import com.goby56.strangercraft.utils.ICoralExtension;
+import com.goby56.strangercraft.utils.CoralBlockDuck;
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.math.BlockPos;
@@ -44,15 +44,8 @@ public class RemoveWaterMixin {
                             // Remove all water
                             world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
                         } else if (blockState.isIn(ModTags.ModBlocks.CORAL)) {
-                            // Turn coral into its dead variant
-//                            ICoralExtension deadCoralInterface = (ICoralExtension) blockState.getBlock();
-//                            deadCoralInterface.killCoral(blockState, world.toServerWorld(), blockPos);
-                            try {
-                                ICoralExtension deadCoralInterface = (ICoralExtension) blockState.getBlock();
-                                deadCoralInterface.killCoral(blockState, world.toServerWorld(), blockPos);
-                            } catch (Throwable t) {
-                                t.printStackTrace();
-                            }
+                            CoralBlockDuck coralDuck = (CoralBlockDuck)blockState.getBlock();
+                            world.setBlockState(blockPos, coralDuck.getDeadVariant(blockState), Block.NOTIFY_LISTENERS);
                         } else if (blockState.isIn(ModTags.ModBlocks.OCEAN_PLANTS)) {
 //                            // Block is of kelp, seagrass, tall seagrass or sea pickle
 //                            if (world.getBlockState(blockPos.down(1)).isIn(ModTags.ModBlocks.OCEAN_FLOOR)) {
@@ -70,6 +63,7 @@ public class RemoveWaterMixin {
             }
 
             cir.setReturnValue(true);
+
         }
     }
 }
