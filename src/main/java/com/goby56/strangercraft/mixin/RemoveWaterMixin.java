@@ -26,7 +26,6 @@ public class RemoveWaterMixin {
     private void overrideFreezingFeatureStep(FeatureContext<DefaultFeatureConfig> context, CallbackInfoReturnable<Boolean> cir) {
         StructureWorldAccess world = context.getWorld();
         if (world.toServerWorld().getRegistryKey() == UPSIDE_DOWN_DIMENSION_KEY) {
-            Random random = Random.create("upside down worldgen".hashCode());
             BlockPos blockPosOrigin = context.getOrigin();
             BlockPos.Mutable surfaceBlockPos = new BlockPos.Mutable();
             BlockPos.Mutable blockPos = new BlockPos.Mutable();
@@ -41,11 +40,11 @@ public class RemoveWaterMixin {
                         blockPos.set(blockPos).move(Direction.DOWN, 1);
                         BlockState blockState = world.getBlockState(blockPos);
                         if (blockState.isOf(Blocks.WATER) || blockState.isIn(ModTags.ModBlocks.OCEAN_PLANTS)) {
-                            // Remove all water
                             world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
                         } else if (blockState.isIn(ModTags.ModBlocks.CORAL)) {
-                            CoralBlockDuck coralDuck = (CoralBlockDuck)blockState.getBlock();
-                            world.setBlockState(blockPos, coralDuck.getDeadVariant(blockState), Block.NOTIFY_LISTENERS);
+                            if (blockState.getBlock() instanceof CoralBlockDuck coralDuck) {
+                                world.setBlockState(blockPos, coralDuck.getDeadVariant(blockState), Block.NOTIFY_LISTENERS);
+                            }
                         } else if (blockState.isIn(ModTags.ModBlocks.OCEAN_PLANTS)) {
 //                            // Block is of kelp, seagrass, tall seagrass or sea pickle
 //                            if (world.getBlockState(blockPos.down(1)).isIn(ModTags.ModBlocks.OCEAN_FLOOR)) {
@@ -61,9 +60,7 @@ public class RemoveWaterMixin {
                     }
                 }
             }
-
             cir.setReturnValue(true);
-
         }
     }
 }
