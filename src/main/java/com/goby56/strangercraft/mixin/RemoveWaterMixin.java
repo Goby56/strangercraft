@@ -6,7 +6,6 @@ import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -39,13 +38,14 @@ public class RemoveWaterMixin {
                     for (int k = y; k > -63; --k) {
                         blockPos.set(blockPos).move(Direction.DOWN, 1);
                         BlockState blockState = world.getBlockState(blockPos);
-                        if (blockState.isOf(Blocks.WATER) || blockState.isIn(ModTags.ModBlocks.OCEAN_PLANTS)) {
+                        if (blockState.isOf(Blocks.WATER)) {
                             world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
-                        } else if (blockState.isIn(ModTags.ModBlocks.CORAL)) {
+                        } else if (blockState.isIn(ModTags.Blocks.CORAL)) {
                             if (blockState.getBlock() instanceof CoralBlockDuck coralDuck) {
                                 world.setBlockState(blockPos, coralDuck.getDeadVariant(blockState), Block.NOTIFY_LISTENERS);
                             }
-                        } else if (blockState.isIn(ModTags.ModBlocks.OCEAN_PLANTS)) {
+                        } else if (blockState.isIn(ModTags.Blocks.OCEAN_PLANTS)) {
+                            world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
 //                            // Block is of kelp, seagrass, tall seagrass or sea pickle
 //                            if (world.getBlockState(blockPos.down(1)).isIn(ModTags.ModBlocks.OCEAN_FLOOR)) {
 //                                if (blockState.isOf(Blocks.KELP)) {
@@ -55,7 +55,8 @@ public class RemoveWaterMixin {
 //                                }
 //                            }
                         } else if (blockState.getFluidState().isOf(Fluids.WATER)) {
-                            world.setBlockState(blockPos, blockState.getBlock().getDefaultState(), Block.NOTIFY_LISTENERS);
+//                            world.setBlockState(blockPos, blockState.getBlock().getDefaultState(), Block.NOTIFY_LISTENERS);
+                            world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
                         }
                     }
                 }

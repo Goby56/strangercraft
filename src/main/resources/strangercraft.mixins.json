@@ -9,7 +9,8 @@
     "coral.CoralBlockMixin",
     "coral.CoralBlockBlockMixin",
     "coral.CoralFanBlockMixin",
-    "coral.CoralWallFanBlockMixin"
+    "coral.CoralWallFanBlockMixin",
+    "ChunkGeneratorMixin"
   ],
   "client": [
   ],

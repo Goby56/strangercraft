@@ -1,0 +1,6 @@
+{
+  "parent": "strangercraft:block/template_dead_kelp_raised_ne",
+  "textures": {
+    "rail": "strangercraft:block/dead_kelp"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "strangercraft:block/dead_kelp_flat",
+  "textures": {
+    "rail": "strangercraft:block/dead_kelp"
+  }
+}
