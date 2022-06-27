@@ -22,6 +22,7 @@ public class ModBlocks {
     public static final Block CONTAMINATED_GRASS_BLOCK = registerBlock("contaminated_grass_block", new ShearableVineBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.LICHEN_GREEN).requiresTool().sounds(BlockSoundGroup.MUD).strength(0.6f)), ItemGroup.BUILDING_BLOCKS, false);
     public static final Block CONTAMINATED_LOG = registerBlock("contaminated_log", new ShearableVineBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.PALE_GREEN).requiresTool().sounds(BlockSoundGroup.NETHER_STEM).strength(2f, 3f)), ItemGroup.BUILDING_BLOCKS, false);
     public static final Block DEAD_KELP = registerBlock("dead_kelp", new DeadKelpBlock(FabricBlockSettings.of(Material.UNDERWATER_PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.WET_GRASS)), ItemGroup.DECORATIONS, true);
+    public static final Block ABSTRACT_VINELIKE = registerBlock("abstract_vinelike", new FleshTendrilBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).noCollision().requiresTool().sounds(BlockSoundGroup.CAVE_VINES).strength(0.2f), false, 4), ItemGroup.DECORATIONS, true);
 
     private static Block registerBlock(String name, Block block, ItemGroup group, Boolean cutout) {
         registerBlockItem(name, block, group);
