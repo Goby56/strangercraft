@@ -1,0 +1,44 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "strangercraft:block/vinelike_sprout"
+      },
+      "when": {
+        "placement": "floor"
+      }
+    },
+    {
+      "apply": {
+        "model": "strangercraft:block/vinelike_straigt"
+      },
+      "when": {
+
+      }
+    },
+    {
+      "apply": {
+        "model": "strangercraft:block/vinelike_turn"
+      },
+      "when": {
+
+      }
+    },
+    {
+      "apply": {
+        "model": "strangercraft:block/vinelike_threeway"
+      },
+      "when": {
+
+      }
+    },
+    {
+      "apply": {
+        "model": "strangercraft:block/vinelike_crossing"
+      },
+      "when": {
+
+      }
+    }
+  ]
+}
