@@ -16,6 +16,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -91,7 +92,7 @@ public class AbstractVinelikeBlock
         Direction direction = RaycastUtil.getBlockFace(instance.crosshairTarget, instance.player.getEyePos());
 
         state = state.with(directionToProperty(direction, "face"), true);
-        state = state.with(directionToProperty(direction, "connection"), true);
+        state = state.with(directionToProperty(direction.getOpposite(), "connection"), true);
 
         // Add waterlogging capabilities
         return state;
@@ -138,14 +139,12 @@ public class AbstractVinelikeBlock
 
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        MinecraftClient instance = MinecraftClient.getInstance();
-        for (BlockState neighborState : getNeighborsOfSimilar(world, pos)) {
-            instance.player.sendMessage(Text.of("has neighbor!"));
-            state = getUpdatedState(state, neighborState);
+        for (Direction direction : DIRECTIONS) {
+            BlockState neighborState = world.getBlockState(pos.offset(direction));
+            if (!neighborState.isOf(this)) continue;
+            state = getUpdatedState(state, neighborState, direction);
         }
-        instance.player.sendMessage(Text.of(state.toString()));
         world.setBlockState(pos, state, NOTIFY_LISTENERS);
-
     }
 
     @Override
@@ -157,15 +156,17 @@ public class AbstractVinelikeBlock
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        for (BlockState neighborState : getNeighborsOfSimilar(world, pos)) {
-            state = getUpdatedState(state, neighborState);
-        }
+        BlockState neighborState = world.getBlockState(pos);
+        Direction direction = Direction.fromVector(sourcePos);
+        MinecraftClient.getInstance().player.sendMessage(Text.of(direction.asString()));
+        state = getUpdatedState(state, neighborState, direction);
+
         world.setBlockState(pos, state, NOTIFY_LISTENERS);
     }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        return getUpdatedState(state, neighborState);
+        return getUpdatedState(state, neighborState, direction);
     }
 
     @Override
@@ -173,26 +174,15 @@ public class AbstractVinelikeBlock
         return PistonBehavior.PUSH_ONLY;
     }
 
-    public BlockState getUpdatedState(BlockState state, BlockState neighborState) {
+    public BlockState getUpdatedState(BlockState state, BlockState neighborState, Direction sourceDirection) {
         if (!neighborState.isOf(this)) return state;
         for (Direction direction : DIRECTIONS) {
             if (state.get(directionToProperty(direction, "face")) & neighborState.get(directionToProperty(direction, "face"))) {
                 // Neighbor and current block is on same face and should connect
-                MinecraftClient.getInstance().player.sendMessage(Text.of("CONNECTION NEIGHTBOR"));
-                state = state.with(directionToProperty(direction, "connection"), true);
+                state = state.with(directionToProperty(sourceDirection, "connection"), true);
             }
         }
         return state;
-    }
-
-    private ArrayList<BlockState> getNeighborsOfSimilar(World world, BlockPos pos) {
-        ArrayList<BlockState> neighbors = new ArrayList<>();
-        for (Direction direction : DIRECTIONS) {
-            BlockState neighborState = world.getBlockState(pos.offset(direction));
-            if (!neighborState.isOf(this)) continue;
-            neighbors.add(neighborState);
-        }
-        return neighbors;
     }
 
     public static boolean canGrowOn(BlockView world, Direction direction, BlockPos pos, BlockState state) {
