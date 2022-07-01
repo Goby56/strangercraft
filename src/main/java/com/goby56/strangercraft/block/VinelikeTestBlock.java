@@ -7,8 +7,6 @@ import net.minecraft.util.math.random.Random;
 
 public class VinelikeTestBlock extends AbstractVinelikeBlock{
 
-//    private final Random clusterID; // Intended to use for dead kelp with roots being on one side of the fallen kelp
-
     public VinelikeTestBlock(Settings settings, boolean forbidsMultiConnections, int height) {
         super(settings, forbidsMultiConnections, height);
     }

@@ -1,6 +1,7 @@
 package com.goby56.strangercraft;
 
 import com.goby56.strangercraft.block.ModBlocks;
+import com.goby56.strangercraft.block.entity.ModBlockEntities;
 import com.goby56.strangercraft.item.ModItems;
 import com.goby56.strangercraft.tag.ModTags;
 import com.goby56.strangercraft.world.biome.ModBiomeKeys;
@@ -27,6 +28,8 @@ public class Strangercraft implements ModInitializer {
 		ModItems.register();
 
 		ModBlocks.register();
+
+		//ModBlockEntities.register();
 
 		ModTags.Blocks.register();
 
