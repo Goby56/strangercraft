@@ -3,6 +3,7 @@ package com.goby56.strangercraft.mixin;
 import com.goby56.strangercraft.world.dimension.UpsideDownDimension;
 import net.minecraft.SharedConstants;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +32,11 @@ public abstract class ChunkGeneratorMixin {
     private void placeOverworldChunk(Blender blender, StructureAccessor structureAccessor, NoiseConfig noiseConfig, Chunk chunk, int i, int j, CallbackInfoReturnable<Chunk> cir) {
         if (MinecraftClient.getInstance().world != null) {
             if (MinecraftClient.getInstance().world.getRegistryKey() == UPSIDE_DOWN_DIMENSION_KEY) {
-                // The player has entered a world and is in the upside down
+                // Find another place to inject into.
+                // Dimension file will be exactly the same as overworld file, only with flipped biomes
+                // Flipped variants of biomes will stay to define foliage, sky and water color as well as music
+                // It is noise settings that will change I think because it defines where the actual blocks should go
+                // The only thing that should stay is biomes.
             }
         }
     }
