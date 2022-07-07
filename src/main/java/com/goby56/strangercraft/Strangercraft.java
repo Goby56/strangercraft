@@ -1,18 +1,24 @@
 package com.goby56.strangercraft;
 
 import com.goby56.strangercraft.block.ModBlocks;
-import com.goby56.strangercraft.block.entity.ModBlockEntities;
+import com.goby56.strangercraft.entity.ModEntities;
 import com.goby56.strangercraft.item.ModItems;
 import com.goby56.strangercraft.tag.ModTags;
+import com.goby56.strangercraft.utils.InterdimPresenceForceLoader;
 import com.goby56.strangercraft.world.biome.ModBiomeKeys;
+import com.goby56.strangercraft.world.dimension.InterdimPresenceEventHandler;
 import com.goby56.strangercraft.world.dimension.UpsideDownDimension;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Strangercraft implements ModInitializer {
 
 	public static final String MOD_ID = "strangercraft";
+
+	public static final InterdimPresenceForceLoader forceLoadedChunkHandler = new InterdimPresenceForceLoader();
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
@@ -36,5 +42,11 @@ public class Strangercraft implements ModInitializer {
 		UpsideDownDimension.register();
 
 		ModBiomeKeys.register();
+
+		ModEntities.register();
+
+		ServerTickEvents.END_SERVER_TICK.register(forceLoadedChunkHandler::tick);
+
+		ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(InterdimPresenceEventHandler::onPlayerChangeDimension);
 	}
 }

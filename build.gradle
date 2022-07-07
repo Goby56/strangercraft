@@ -36,6 +36,8 @@ dependencies {
 
 	modImplementation 'net.kyrptonaught:customportalapi:0.0.1-beta51-1.19'
 	include 'net.kyrptonaught:customportalapi:0.0.1-beta51-1.19'
+
+	modImplementation "com.ptsmods:devlogin:2.1"
 }
 
 processResources {

@@ -1,16 +1,19 @@
 {
-  "carvers": {},
-  "downfall": 0.5,
+  "precipitation": "none",
+  "temperature": 0.1,
+  "temperature_modifier": "none",
+  "downfall": 0.9,
+  "creature_spawn_probability": 0,
   "effects": {
-    "fog_color": 3753558,
-    "foliage_color": 9211020,
-    "grass_color": 5334884,
+    "fog_color": 5084848,
+    "foliage_color": 9214860,
+    "grass_color": 8497069,
     "sky_color": 2699320,
-    "water_color": 4276043,
-    "water_fog_color": 4600653,
+    "water_color": 2042417,
+    "water_fog_color": 1124913,
     "grass_color_modifer": "none",
     "particle": {
-      "probability": 0.15,
+      "probability": 0.11,
       "options": {
         "type": "minecraft:white_ash"
       }
@@ -29,6 +32,25 @@
       "replace_current_music": false
     }
   },
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [
+      {
+        "type": "minecraft:vex",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "spawn_costs": {},
+  "carvers": {},
   "features": [
     [],
     [],
@@ -41,47 +63,7 @@
     [],
     [],
     [
-      "minecraft:void_start_platform"
+      "minecraft:freeze_top_layer"
     ]
-  ],
-  "precipitation": "none",
-  "spawn_costs": {},
-  "spawners": {
-    "ambient": [
-      {
-        "type": "minecraft:bat",
-        "weight": 70,
-        "minCount": 4,
-        "maxCount": 10
-      }
-    ],
-    "axolotls": [],
-    "creature": [
-      {
-        "type": "minecraft:zombie_horse",
-        "weight": 30,
-        "minCount": 2,
-        "maxCount": 4
-      }
-    ],
-    "misc": [],
-    "monster": [
-      {
-        "type": "minecraft:vex",
-        "weight": 95,
-        "minCount": 1,
-        "maxCount": 2
-      },
-      {
-        "type": "minecraft:warden",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      }
-    ],
-    "underground_water_creature": [],
-    "water_ambient": [],
-    "water_creature": []
-  },
-  "temperature": 0.5
+  ]
 }
