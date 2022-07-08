@@ -1,18 +1,17 @@
-package com.goby56.strangercraft.utils;
+package com.goby56.strangercraft.world.gen;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 import java.util.*;
 
-public class InterdimPresenceForceLoader {
+public class ForceLoadedChunkManager {
 
     private final Map<Long, ArrayList<UUID>> managedChunks;
     private final Set<Long> forceLoadedChunks;
 
-    public InterdimPresenceForceLoader() {
+    public ForceLoadedChunkManager() {
         this.managedChunks = new HashMap<>();
         this.forceLoadedChunks = new HashSet<>();
     }

@@ -4,13 +4,13 @@
   "package": "com.goby56.strangercraft.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ModifyTreeGeneration",
     "CopyChunkMixin",
-    "coral.CoralBlockMixin",
+    "ModifyTreeGeneration",
+    "TicketDelayerMixin",
     "coral.CoralBlockBlockMixin",
+    "coral.CoralBlockMixin",
     "coral.CoralFanBlockMixin",
-    "coral.CoralWallFanBlockMixin",
-    "ChunkGeneratorMixin"
+    "coral.CoralWallFanBlockMixin"
   ],
   "client": [
   ],

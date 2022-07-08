@@ -2,7 +2,6 @@ package com.goby56.strangercraft.mixin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -35,11 +34,19 @@ public class CopyChunkMixin {
                 return;
             }
 
-            ServerChunkManager chunkManager = overworld.getChunkManager();
+            ServerChunkManager overworldChunkManager = overworld.getChunkManager();
 
             int chunkX = originPos.getX() / 16, chunkZ = originPos.getZ() / 16;
 
-            BlockView overworldChunkView = chunkManager.getChunk(chunkX, chunkZ);
+            BlockView overworldChunkView = overworldChunkManager.getChunk(chunkX, chunkZ);
+//            overworldChunkManager.getChunkFutureSyncOnMainThread(chunkX, chunkZ, ChunkStatus.FULL, true)
+//                    .thenApply(UpsideDownChunkGenerator::getChunk)
+//                    .thenAccept();
+
+//            Chunk chunk = CompletableFuture.supplyAsync(() -> overworldChunkManager.getChunk(chunkX, chunkZ, ChunkStatus.LIGHT, true))
+//                    .thenAccept();
+
+
 
             if (overworldChunkView == null) {
                 cir.setReturnValue(true);

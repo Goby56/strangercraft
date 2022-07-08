@@ -1,7 +1,8 @@
 package com.goby56.strangercraft.entity;
 
 import com.goby56.strangercraft.Strangercraft;
-import com.goby56.strangercraft.utils.InterdimPresenceForceLoader;
+import com.goby56.strangercraft.world.gen.ForceLoadedChunkManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -10,13 +11,13 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkManager;
+import net.minecraft.world.chunk.ChunkStatus;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.goby56.strangercraft.world.dimension.UpsideDownDimension.UPSIDE_DOWN_DIMENSION_KEY;
@@ -28,13 +29,14 @@ public class InterdimensionalPresenceEntity extends Entity {
     @Nullable
     private UUID ownerUuid;
     private int viewDistance;
-    private final InterdimPresenceForceLoader chunkLoader;
+    private final ForceLoadedChunkManager forceLoadedChunkManager;
     private long currentChunk;
 
     public InterdimensionalPresenceEntity(EntityType<InterdimensionalPresenceEntity> type, World world) {
         super(type, world);
         this.viewDistance = getServer().getPlayerManager().getViewDistance();
-        this.chunkLoader = Strangercraft.forceLoadedChunkHandler;
+        this.forceLoadedChunkManager = Strangercraft.FORCE_LOADED_CHUNK_MANAGER;
+        System.out.println(world.getRegistryKey().toString());
     }
 
     public InterdimensionalPresenceEntity(World world, double x, double y, double z, LivingEntity owner) {
@@ -50,34 +52,31 @@ public class InterdimensionalPresenceEntity extends Entity {
 
     @Override
     public void tick() {
-        if (this.owner == null) {
-            this.discontinue();
+        if (this.owner == null || this.owner.getWorld().getRegistryKey() != UPSIDE_DOWN_DIMENSION_KEY
+                || this.owner.isDead() || getServer() == null) {
+            forceLoadedChunkManager.removeDependency(ChunkPos.toLong(getBlockPos()), ownerUuid);
+            this.discard();
+            return;
         }
-        if (this.owner.getWorld().getRegistryKey() != UPSIDE_DOWN_DIMENSION_KEY) {
-            this.discontinue();
-        }
+
         this.setPosition(this.owner.getPos());
         this.viewDistance = getServer().getPlayerManager().getViewDistance();
 
         boolean newChunk = currentChunk != ChunkPos.toLong(getBlockPos());
         if (newChunk) {
-            chunkLoader.removeDependency(currentChunk, ownerUuid);
+            forceLoadedChunkManager.removeDependency(currentChunk, ownerUuid);
             currentChunk = ChunkPos.toLong(getBlockPos());
-            chunkLoader.appendChunk(currentChunk, ownerUuid);
+            forceLoadedChunkManager.appendChunk(currentChunk, ownerUuid);
         }
 
         getServer().getOverworld().getChunkManager()
-                .addTicket(ChunkTicketType.PLAYER, new ChunkPos(getBlockPos()), viewDistance, new ChunkPos(getBlockPos()));
+                .addTicket(ChunkTicketType.PLAYER, new ChunkPos(getBlockPos()), viewDistance+1, new ChunkPos(getBlockPos()));
+
     }
 
     public void setOwner(@Nullable LivingEntity owner) {
         this.owner = owner;
         this.ownerUuid = owner == null ? null : owner.getUuid();
-    }
-
-    private void discontinue() {
-        chunkLoader.removeDependency(ChunkPos.toLong(getBlockPos()), ownerUuid);
-        this.discard();
     }
 
     @Nullable
