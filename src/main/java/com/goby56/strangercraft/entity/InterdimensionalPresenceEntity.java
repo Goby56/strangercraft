@@ -69,8 +69,8 @@ public class InterdimensionalPresenceEntity extends Entity {
             forceLoadedChunkManager.appendChunk(currentChunk, ownerUuid);
         }
 
-        getServer().getOverworld().getChunkManager()
-                .addTicket(ChunkTicketType.PLAYER, new ChunkPos(getBlockPos()), viewDistance+1, new ChunkPos(getBlockPos()));
+//        getServer().getOverworld().getChunkManager()
+//                .addTicket(ChunkTicketType.PLAYER, new ChunkPos(getBlockPos()), viewDistance+1, new ChunkPos(getBlockPos()));
 
     }
 
